@@ -5,6 +5,8 @@ from src.logger import logging
 import pandas as pd 
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass 
+from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 
 
 @dataclass
@@ -28,11 +30,20 @@ class DataIngestion:
             test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
             logging.info("train and test data is saved")
             return{
-                   "train_data_path": self.ingestion_config.train_data_path,
-                "test_data_path": self.ingestion_config.test_data_path
+                   "train_path": self.ingestion_config.train_data_path,
+                "test_path": self.ingestion_config.test_data_path
             }
         except Exception as e:
             raise CustomException(e, sys)
 if __name__ == "__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    paths = obj.initiate_data_ingestion()   # returns dict
+
+    train_data = paths["train_path"]
+    test_data = paths["test_path"]
+
+    data_transformation = DataTransformation()
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
+
+    modeltrainer = ModelTrainer()
+    modeltrainer.initiate_model_trainer(train_arr, test_arr)

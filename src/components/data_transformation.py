@@ -78,6 +78,3 @@ class DataTransformation:
 
                        
         
-if __name__ == "__main__":  
-   object = DataTransformation()
-   object.initiate_data_transformation('artifacts/train.csv', 'artifacts/test.csv')
