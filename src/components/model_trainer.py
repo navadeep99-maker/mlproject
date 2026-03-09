@@ -85,6 +85,7 @@ class ModelTrainer:
             best_model_name = max(model_report, key=lambda k: model_report[k]["test_score"])
             best_model_score = model_report[best_model_name]["test_score"]
             best_model = models[best_model_name]
+            best_model.fit(X_train, y_train)  
 
             if best_model_score < 0.6:
                 raise CustomException("No best model found", sys)
