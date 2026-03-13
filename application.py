@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import Predict_Pipeline,custom_data     
-application=Flask(__name__)
-app=application
+app=Flask(__name__)
+
 @app.route('/')
 def index():
     return render_template("index.html")
