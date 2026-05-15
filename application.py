@@ -2,12 +2,15 @@ from flask import Flask, request, render_template
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+<<<<<<< HEAD
 from src.pipeline.predict_pipeline import Predict_Pipeline, custom_data     
 
 application = Flask(__name__)
 app = application
 
 @app.route("/", methods=['GET', 'POST'])
+=======
+
 def predict_datapoint():
     if request.method == 'POST':
         try:
