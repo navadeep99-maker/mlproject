@@ -1,31 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Exam Performance Indicator</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Predictor</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 700px;
+            margin-top: 50px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-control, .btn {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1em;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .prediction-result {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error-message {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.2em;
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <div class="login">
+    <div class="container">
         <h1>Student Exam Performance Indicator</h1>
 
+        <!-- Form now posts to root "/" -->
         <form action="{{ url_for('predict_datapoint') }}" method="post">
-            <h2>Student Exam Performance Prediction</h2>
+            <h2>Predict Student's Math Score</h2>
 
-            <!-- Gender -->
-            <div class="mb-3">
-                <label class="form-label">Gender</label>
-                <select class="form-control" name="gender" required>
-                    <option selected disabled value="">Select your Gender</option>
+            <div class="form-group">
+                <label for="gender" class="form-label">Gender</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="">Select your Gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
             </div>
 
-            <!-- Race/Ethnicity -->
-            <div class="mb-3">
-                <label class="form-label">Race or Ethnicity</label>
-                <select class="form-control" name="race_ethnicity" required>
-                    <option selected disabled value="">Select Ethnicity</option>
+            <div class="form-group">
+                <label for="race_ethnicity" class="form-label">Race or Ethnicity</label>
+                <select class="form-control" id="race_ethnicity" name="race_ethnicity" required>
+                    <option value="">Select Ethnicity</option>
                     <option value="group A">Group A</option>
                     <option value="group B">Group B</option>
                     <option value="group C">Group C</option>
@@ -34,11 +86,10 @@
                 </select>
             </div>
 
-            <!-- Parental Education -->
-            <div class="mb-3">
-                <label class="form-label">Parental Level of Education</label>
-                <select class="form-control" name="parental_level_of_education" required>
-                    <option selected disabled value="">Select Parent Education</option>
+            <div class="form-group">
+                <label for="parental_level_of_education" class="form-label">Parental Level of Education</label>
+                <select class="form-control" id="parental_level_of_education" name="parental_level_of_education" required>
+                    <option value="">Select Parent Education</option>
                     <option value="associate's degree">Associate's degree</option>
                     <option value="bachelor's degree">Bachelor's degree</option>
                     <option value="high school">High school</option>
@@ -48,55 +99,53 @@
                 </select>
             </div>
 
-            <!-- Lunch -->
-            <div class="mb-3">
-                <label class="form-label">Lunch Type</label>
-                <select class="form-control" name="lunch" required>
-                    <option selected disabled value="">Select Lunch Type</option>
+            <div class="form-group">
+                <label for="lunch" class="form-label">Lunch Type</label>
+                <select class="form-control" id="lunch" name="lunch" required>
+                    <option value="">Select Lunch Type</option>
                     <option value="free/reduced">Free/reduced</option>
                     <option value="standard">Standard</option>
                 </select>
             </div>
 
-            <!-- Test Prep -->
-            <div class="mb-3">
-                <label class="form-label">Test Preparation Course</label>
-                <select class="form-control" name="test_preparation_course" required>
-                    <option selected disabled value="">Select Test Course</option>
+            <div class="form-group">
+                <label for="test_preparation_course" class="form-label">Test Preparation Course</label>
+                <select class="form-control" id="test_preparation_course" name="test_preparation_course" required>
+                    <option value="">Select Test Course</option>
                     <option value="none">None</option>
                     <option value="completed">Completed</option>
                 </select>
             </div>
 
-            <!-- Reading Score -->
-            <div class="mb-3">
-                <label class="form-label">Reading Score out of 100</label>
-                <input class="form-control" type="number" name="reading_score"
+            <div class="form-group">
+                <label for="reading_score" class="form-label">Reading Score out of 100</label>
+                <input class="form-control" type="number" id="reading_score" name="reading_score"
                        placeholder="Enter your Reading score" min="0" max="100" required />
             </div>
 
-            <!-- Writing Score -->
-            <div class="mb-3">
-                <label class="form-label">Writing Score out of 100</label>
-                <input class="form-control" type="number" name="writing_score"
+            <div class="form-group">
+                <label for="writing_score" class="form-label">Writing Score out of 100</label>
+                <input class="form-control" type="number" id="writing_score" name="writing_score"
                        placeholder="Enter your Writing score" min="0" max="100" required />
             </div>
 
-            <!-- Submit -->
-            <div class="mb-3">
-                <input class="btn btn-primary" type="submit" value="Predict your Maths Score" />
-            </div>
+            <button type="submit" class="btn btn-primary">Predict Math Score</button>
         </form>
 
-        <!-- Prediction Output -->
-        <h2>
-            {% if results %}
-                The prediction is {{ results }}
-            {% endif %}
-            {% if error %}
+        {% if results %}
+            <div class="prediction-result">
+                The predicted Math Score is: {{ results }}
+            </div>
+        {% endif %}
+        {% if error %}
+            <div class="error-message">
                 Error: {{ error }}
-            {% endif %}
-        </h2>
+            </div>
+        {% endif %}
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
